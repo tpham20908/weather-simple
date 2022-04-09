@@ -8,4 +8,4 @@
 - Typescript.
 - Old school React class based components (would be more compact and elegant with functional components 🎯 which I prefer).
 - Old school LESS
-- Hosted on:
+- Live on: [https://weather-23.netlify.app](https://weather-23.netlify.app/)
