@@ -23,7 +23,8 @@
 .weather-container__today > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  gap: 12px;
+  align-items: center;
 }
 .weather-container__today > div > p {
   display: grid;
