@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 .weather-container__today {
-  min-height: 40vh;
+  height: min(35vh, 320px);
   font-size: clamp(1.5rem, 2.8vw, 1.8em);
   display: grid;
   place-content: center;

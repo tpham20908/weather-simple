@@ -1,9 +1,9 @@
 .main-container {
-  width: min(95vw, 560px);
+  width: min(95vw, 640px);
   height: fit-content;
-  padding: 12px 0;
-  margin: 32px auto 12px;
+  margin: 1rem auto;
   display: grid;
   grid-template-rows: auto 1fr;
+  justify-content: center;
 }
 /*# sourceMappingURL=App.css.map */

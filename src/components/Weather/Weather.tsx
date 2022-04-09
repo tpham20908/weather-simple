@@ -15,7 +15,7 @@ export default class Weather extends Component<{ weathers: IWeather[] }> {
 			<>
 				<p>{getDayText(timestamp)}</p>
 				<div>
-					<FontAwesomeIcon icon={icon} color='#CDF0F0' size='4x' />
+					<FontAwesomeIcon icon={icon} color='#CDF0F0' size='3x' />
 					<p>
 						<span className='temp'>{temp}&deg;</span>
 						<span>{weatherMain}</span>
@@ -33,7 +33,7 @@ export default class Weather extends Component<{ weathers: IWeather[] }> {
 					return (
 						<div key={timestamp}>
 							<p>{getDayText(timestamp)}</p>
-							<FontAwesomeIcon icon={icon} color='#CDF0F0' size='2x' />
+							<FontAwesomeIcon icon={icon} color='#CDF0F0' size='lg' />
 							<p className='temp'>{temp}&deg;</p>
 						</div>
 					);
