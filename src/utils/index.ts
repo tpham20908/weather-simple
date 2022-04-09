@@ -1,5 +1,4 @@
 import * as constants from './constants';
-import getWeatherUrl from './getWeatherUrl';
-import getHighlightedWeather from './getHighlightedWeather';
+import * as helpers from './helpers';
 
-export { constants, getWeatherUrl, getHighlightedWeather };
+export { constants, helpers };

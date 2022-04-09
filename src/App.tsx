@@ -3,63 +3,77 @@ import React, { Component } from 'react';
 import './App.css';
 import Cities from './components/Cities';
 import Weather from './components/Weather';
-import { IWeather } from './utils/interfaces';
-import { constants, getHighlightedWeather, getWeatherUrl } from './utils';
+import { IAppState, IWeather } from './utils/interfaces';
+import { constants, helpers } from './utils';
 
 const { CITIES } = constants;
-
-interface IState {
-	city: string;
-	weathers: IWeather[];
-}
+const { fetchWeather } = helpers;
 
 class App extends Component {
-	state: IState = {
-		city: CITIES[0],
-		weathers: [],
+	state: IAppState = {
+		selectedCity: CITIES[0],
+		weathersByCity: [],
 	};
 
-	componentDidMount() {
-		this.fetchWeather(this.state.city);
+	async componentDidMount() {
+		const weathers = await fetchWeather(this.state.selectedCity);
+		this.setState((prevState) => ({
+			...prevState,
+			weathersByCity: [{ [this.state.selectedCity]: weathers }],
+		}));
+	}
+
+	async componentDidUpdate(prevProps: any, prevState: IAppState) {
+		const { selectedCity } = this.state;
+		const { weathersByCity: currentWeathersByCity } = prevState;
+		// check if weather for selected city is already in state
+		const foundWeatherForThisCity = currentWeathersByCity.find(
+			(weather: Record<string, IWeather[]>) => weather[selectedCity]
+		);
+		// fetch weather for selected city if not found
+		if (!foundWeatherForThisCity) {
+			const weathers = await fetchWeather(selectedCity);
+			this.setState((prevState) => ({
+				...prevState,
+				weathersByCity: [
+					...currentWeathersByCity,
+					{ [selectedCity]: weathers },
+				],
+			}));
+		}
 	}
 
 	handleSelectCity = (city: string) => {
-		this.setState({
-			city,
-		});
-		this.fetchWeather(city);
+		this.setState((prevState) => ({
+			...prevState,
+			selectedCity: city,
+		}));
 	};
 
-	fetchWeather = (city: string) => {
-		this.setState((prevState) => ({
-			...prevState,
-			loading: true,
-		}));
-		const url = getWeatherUrl(city);
-		fetch(url)
-			.then((response) => response.json())
-			.then((data) => {
-				const highlightedWeather = getHighlightedWeather(data);
-
-				this.setState((prevState) => ({
-					...prevState,
-					weathers: highlightedWeather,
-				}));
-			});
-		this.setState((prevState) => ({
-			...prevState,
-			loading: false,
-		}));
+	getWeatherForSelectedCity = (
+		selectedCity: string,
+		weathersByCity: Record<string, IWeather[]>[]
+	): IWeather[] => {
+		const foundWeathers = weathersByCity.find(
+			(weather: Record<string, IWeather[]>) => weather[selectedCity]
+		);
+		return foundWeathers ? foundWeathers[selectedCity] : [];
 	};
 
 	render() {
+		const { selectedCity = '', weathersByCity = [] } = this.state;
+		const weatherByCity = this.getWeatherForSelectedCity(
+			selectedCity,
+			weathersByCity
+		);
+
 		return (
 			<div className='container'>
 				<Cities
-					selectedCity={this.state.city}
+					selectedCity={selectedCity}
 					handleSelectCity={this.handleSelectCity}
 				/>
-				<Weather weathers={this.state.weathers} />
+				<Weather weathers={weatherByCity} />
 			</div>
 		);
 	}
