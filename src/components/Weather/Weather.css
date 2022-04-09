@@ -3,11 +3,11 @@
   place-items: center;
 }
 .weather-container {
-  width: min(95vw, 560px);
+  width: min(95vw, 640px);
   display: grid;
   grid-template-rows: 1fr auto;
   border-radius: 12px;
-  box-shadow: 0 4px 4px 8px rgba(0, 0, 0, 0.02), inset 0 0 0 4px white;
+  box-shadow: 0 12px 18px 4px rgba(0, 0, 0, 0.1), inset 0 0 0 4px white;
   overflow: hidden;
 }
 .weather-container__today {
@@ -38,7 +38,7 @@
 .weather-container__nextdays {
   font-size: clamp(1.3rem, 2.6vw, 1.7em);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: -4px;
 }
 .weather-container__nextdays > div {

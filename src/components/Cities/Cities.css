@@ -1,6 +1,6 @@
 .cities-container {
   margin: 1rem auto 2rem;
-  width: min(95vw, 560px);
+  width: min(95vw, 640px);
   display: flex;
   justify-content: center;
   gap: 24px;
