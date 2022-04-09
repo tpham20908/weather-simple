@@ -1,44 +1,62 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faCloud } from '@fortawesome/free-solid-svg-icons';
 
 import './Weather.css';
 import { IWeather } from '../../utils/interfaces';
 import { helpers } from '../../utils';
 
-const { getDayText } = helpers;
+const { getDayText, getIconByWeather } = helpers;
 
 export default class Weather extends Component<{ weathers: IWeather[] }> {
 	renderTodayWeather = (weather: IWeather) => {
-		const { weatherMain = '', timestamp = 0 } = weather;
+		const { weatherMain = '', timestamp = 0, temp = 0 } = weather;
+		const icon = getIconByWeather(weatherMain);
 		return (
-			<div>
-				{getDayText(timestamp)}
-				<FontAwesomeIcon icon={faCloud} />
-				{/* <FontAwesomeIcon icon={faCoffee} /> */}
-			</div>
+			<>
+				<p>{getDayText(timestamp)}</p>
+				<div>
+					<FontAwesomeIcon icon={icon} color='#CDF0F0' size='4x' />
+					<p>
+						<span className='temp'>{temp}&deg;</span>
+						<span>{weatherMain}</span>
+					</p>
+				</div>
+			</>
 		);
 	};
 	renderNextDaysWeather = (weathers: IWeather[]) => {
-		console.log(weathers);
-		return <div>{getDayText(weathers[0].timestamp)}</div>;
+		return (
+			<>
+				{weathers.map((weather: IWeather) => {
+					const { weatherMain = '', timestamp = 0, temp = 0 } = weather;
+					const icon = getIconByWeather(weatherMain);
+					return (
+						<div key={timestamp}>
+							<p>{getDayText(timestamp)}</p>
+							<FontAwesomeIcon icon={icon} color='#CDF0F0' size='2x' />
+							<p className='temp'>{temp}&deg;</p>
+						</div>
+					);
+				})}
+			</>
+		);
 	};
 
 	render() {
 		const { weathers = [] } = this.props;
 		const [todayWeather, ...rest] = weathers;
-		const nextDaysWeather = rest.slice(0, 3);
 
 		if (!weathers.length) {
-			return <div>Loading...</div>;
+			return <div className='loader'>Loading...</div>;
 		}
+
 		return (
 			<section className='weather-container'>
 				<div className='weather-container__today'>
 					{this.renderTodayWeather(todayWeather)}
 				</div>
 				<div className='weather-container__nextdays'>
-					{this.renderNextDaysWeather(nextDaysWeather)}
+					{this.renderNextDaysWeather(rest)}
 				</div>
 			</section>
 		);

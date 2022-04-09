@@ -1,20 +1,26 @@
 @main-color: #00bcd4;
 
 .cities-container {
-	margin: 1rem 3rem;
+	margin: 1rem auto;
+	width: min(95vw, 560px);
 	display: flex;
 	justify-content: center;
-	gap: 4px;
-}
+	gap: 24px;
+	&__btn {
+		font-family: 'Lato', sans-serif;
+		font-size: clamp(1.2rem, 3vw, 2em);
+		text-transform: uppercase;
+		&:hover {
+			color: @main-color;
+		}
 
-.city-name {
-	font-size: clamp(1rem, 3vw, 1.5em);
-	&:hover {
-		color: @main-color;
+		&--selected {
+			font-weight: 700;
+			color: #00bcd4;
+		}
 	}
-}
 
-.city-selected {
-	font-weight: bold;
-	color: #00bcd4;
+	@media screen and (max-width: 300px) {
+		gap: 12px;
+	}
 }

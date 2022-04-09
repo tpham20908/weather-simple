@@ -1,10 +1,16 @@
+import {
+	faCloud,
+	faCloudShowersHeavy,
+	faThunderstorm,
+	faSun,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { IData } from './interfaces';
 
 const getWeatherUrl = (city: string) =>
-	`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=4&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
+	`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=5&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`;
 
 const getHighlightedWeather = (data: IData) => {
-	console.log({ data });
 	const { list = [] } = data;
 	return list.map(({ temp, weather, dt }) => {
 		const { day = 0 } = temp;
@@ -36,10 +42,32 @@ const getDayText = (timestamp: number) => {
 	];
 	const d = new Date(timestamp * 1000);
 	const today = new Date();
-	if (d.getUTCDay() === today.getUTCDay()) {
+	if (d.getDay() === today.getDay()) {
 		return 'Today';
 	}
-	return days[d.getUTCDay()].slice(0, 3);
+	return days[d.getDay()].slice(0, 3);
 };
 
-export { getWeatherUrl, getHighlightedWeather, fetchWeather, getDayText };
+const getIconByWeather = (weather: string) => {
+	if (/cloud/i.test(weather)) {
+		return faCloud;
+	}
+	if (/rain/i.test(weather)) {
+		return faCloudShowersHeavy;
+	}
+	if (/thunder/i.test(weather)) {
+		return faThunderstorm;
+	}
+	if (/sun/i.test(weather)) {
+		return faSun;
+	}
+	return faSun;
+};
+
+export {
+	getWeatherUrl,
+	getHighlightedWeather,
+	fetchWeather,
+	getDayText,
+	getIconByWeather,
+};

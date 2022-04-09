@@ -1,1 +1,1 @@
-export const CITIES: string[] = ['OTTAWA', 'MOSCOW', 'TOKYO'];
+export const CITIES: string[] = ['ottawa', 'lagos', 'tokyo'];

@@ -68,7 +68,7 @@ class App extends Component {
 		);
 
 		return (
-			<div className='container'>
+			<div className='main-container'>
 				<Cities
 					selectedCity={selectedCity}
 					handleSelectCity={this.handleSelectCity}

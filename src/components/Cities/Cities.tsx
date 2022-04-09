@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import classNames from 'classnames';
 
 import './Cities.css';
 import { constants } from '../../utils';
-import mockup from '../../assets/mockup.png';
 
 const { CITIES } = constants;
 
@@ -17,16 +15,13 @@ export default class Cities extends Component<ICitiesProp> {
 		const { selectedCity = '', handleSelectCity } = this.props;
 		return (
 			<div className='cities-container'>
-				{/* <img src={mockup} alt='mockup' width={740} /> */}
 				{CITIES.map((city, idx) => {
-					const classes = classNames({
-						'city-name': true,
-						'city-selected': city === selectedCity,
-					});
 					return (
 						<button
 							key={idx}
-							className={classes}
+							className={`cities-container__btn ${
+								city === selectedCity ? 'cities-container__btn--selected' : ''
+							}`}
 							onClick={() => handleSelectCity(city)}
 						>
 							{city}
