@@ -1,0 +1,20 @@
+@main-color: #00bcd4;
+
+.cities-container {
+	margin: 1rem 3rem;
+	display: flex;
+	justify-content: center;
+	gap: 4px;
+}
+
+.city-name {
+	font-size: clamp(1rem, 3vw, 1.5em);
+	&:hover {
+		color: @main-color;
+	}
+}
+
+.city-selected {
+	font-weight: bold;
+	color: #00bcd4;
+}

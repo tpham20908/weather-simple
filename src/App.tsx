@@ -1,27 +1,67 @@
 import React, { Component } from 'react';
 
-import getWeatherUrl from './utils/getWeatherUrl';
+import './App.css';
+import Cities from './components/Cities';
+import Weather from './components/Weather';
+import { IWeather } from './utils/interfaces';
+import { constants, getHighlightedWeather, getWeatherUrl } from './utils';
 
-interface IWeather {
-	description: string;
-	// icon: '10n';
-	id: number;
-	main: string;
+const { CITIES } = constants;
+
+interface IState {
+	city: string;
+	weathers: IWeather[];
 }
 
 class App extends Component {
-	componentDidMount() {
-		const url = getWeatherUrl('TOKYO');
+	state: IState = {
+		city: CITIES[0],
+		weathers: [],
+	};
 
+	componentDidMount() {
+		this.fetchWeather(this.state.city);
+	}
+
+	handleSelectCity = (city: string) => {
+		this.setState({
+			city,
+		});
+		this.fetchWeather(city);
+	};
+
+	fetchWeather = (city: string) => {
+		this.setState((prevState) => ({
+			...prevState,
+			loading: true,
+		}));
+		const url = getWeatherUrl(city);
 		fetch(url)
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				const highlightedWeather = getHighlightedWeather(data);
+
+				this.setState((prevState) => ({
+					...prevState,
+					weathers: highlightedWeather,
+				}));
 			});
-	}
+		this.setState((prevState) => ({
+			...prevState,
+			loading: false,
+		}));
+	};
 
 	render() {
-		return <div>Hello</div>;
+		return (
+			<div className='container'>
+				<Cities
+					selectedCity={this.state.city}
+					handleSelectCity={this.handleSelectCity}
+				/>
+				<Weather weathers={this.state.weathers} />
+			</div>
+		);
 	}
 }
 

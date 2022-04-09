@@ -1,0 +1,6 @@
+.container {
+  border: 1px solid red;
+  width: min(95vw, 560px);
+  margin: 32px auto 12px;
+}
+/*# sourceMappingURL=App.css.map */
