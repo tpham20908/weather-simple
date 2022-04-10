@@ -39,7 +39,7 @@
 .weather-container__nextdays {
   font-size: clamp(1.3rem, 2.6vw, 1.7em);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: -4px;
 }
 .weather-container__nextdays > div {
@@ -57,5 +57,14 @@
   font-family: 'Big Shoulders Text';
   font-weight: 400;
   font-size: 32px;
+}
+@media screen and (min-width: 440px) and (max-width: 590px) {
+  .weather-container__nextdays {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .weather-container__nextdays > div:first-child {
+    grid-column: 1/-1;
+    flex-direction: row;
+  }
 }
 /*# sourceMappingURL=Weather.css.map */
