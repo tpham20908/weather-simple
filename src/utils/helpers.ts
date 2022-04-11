@@ -47,10 +47,10 @@ const getDayText = (timestamp: number) => {
 	];
 	const d = new Date(timestamp * 1000);
 	const today = new Date();
-	if (d.getDay() === today.getDay()) {
+	if (d.getUTCDay() === today.getUTCDay()) {
 		return 'Today';
 	}
-	return days[d.getDay()].slice(0, 3);
+	return days[d.getUTCDay()].slice(0, 3);
 };
 
 const getIconByWeather = (weather: string) => {
