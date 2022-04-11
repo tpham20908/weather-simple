@@ -24,10 +24,15 @@ const getHighlightedWeather = (data: IData) => {
 };
 
 const fetchWeather = async (city: string) => {
-	const url = getWeatherUrl(city);
-	const response = await fetch(url);
-	const data = await response.json();
-	return getHighlightedWeather(data);
+	try {
+		const url = getWeatherUrl(city);
+		const response = await fetch(url);
+		const data = await response.json();
+		return getHighlightedWeather(data);
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 };
 
 const getDayText = (timestamp: number) => {
